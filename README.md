@@ -1,0 +1,1 @@
+Backbone Mixin to extend a base Backbone.View
