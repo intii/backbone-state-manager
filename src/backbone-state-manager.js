@@ -9,9 +9,9 @@
 
 (function (root, factory) {
     if (typeof define === "function" && define.amd) {
-        define(["lodash", "../test/lib/SimpleStateManager/src/ssm"], factory);
+        define(["underscore", "simpleStateManager"], factory);
     } else if (typeof exports === "object") {
-        module.exports = factory(require("lodash"), require("../test/lib/SimpleStateManager/src/ssm"));
+        module.exports = factory(require("underscore"), require("simpleStateManager"));
     } else {
         root.Requester = factory(root._, root.ssm);
     }
