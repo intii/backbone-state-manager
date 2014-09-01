@@ -1,8 +1,6 @@
 {
   "name": "BackboneStateManager",
   "dependencies": {
-    "requirejs": "~2.1.14",
-    "SimpleStateManager": "~2.3.0",
-    "underscore": "lodash#~2.4.1"
+    "SimpleStateManager": "~2.3.0"
   }
 }
