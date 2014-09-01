@@ -21,27 +21,7 @@
       /**
        * Views breakpoints
        */
-      breakpoints: {
-        b1: {
-          minWidth: 320,
-          maxWidth: 479
-        },
-        b2: {
-          minWidth: 480,
-          maxWidth: 767
-        },
-        b3: {
-          minWidth: 768,
-          maxWidth: 959
-        },
-        b4: {
-          minWidth: 960,
-          maxWidth: 1199
-        },
-        b5: {
-          minWidth: 1200
-        }
-      },
+      breakpoints: {},
 
       /**
        * Each state of the view can make a set of transformations to the base view.
@@ -62,9 +42,32 @@
        * }
        */
       initialize: function (states, breakpoints) {
+        this.transformations = [];
+        this.breakpoints = {
+          b1: {
+            minWidth: 320,
+            maxWidth: 479
+          },
+          b2: {
+            minWidth: 480,
+            maxWidth: 767
+          },
+          b3: {
+            minWidth: 768,
+            maxWidth: 959
+          },
+          b4: {
+            minWidth: 960,
+            maxWidth: 1199
+          },
+          b5: {
+            minWidth: 1200
+          }
+        };
         if (breakpoints) {
           this.breakpoints = breakpoints;
         }
+
         this.updateStates(states);
       },
 
