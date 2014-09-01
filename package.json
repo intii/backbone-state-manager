@@ -1,0 +1,16 @@
+{
+  "name": "backbone-state-manager",
+  "description": "A mixin to update Backbone views to allow responsive logic",
+  "version": "0.1.0",
+  "homepage": "https://github.com/intii/backbone-state-manager",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt": "~0.4.0",
+    "lodash": "2.4.1",
+    "backbone": "~1.1.2",
+    "jsdom": "~0.10.4"
+  }
+}
