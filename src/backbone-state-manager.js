@@ -2,9 +2,8 @@
  * ResponsiveView will serve as a base view for every page that needs to handle
  * responsive styling from javascript (for complex behaviours in which css is not
  * enough)
- * The child view can define for each breakpoint a set of transformations. ResponsiveView
- * will handle the rendering and destroying of them
- *
+ * The child view can define the set of transformations needed for each specified
+ * screen size. ResponsiveView will handle the rendering and destroying of them
  */
 
 (function (root, factory) {
@@ -18,56 +17,23 @@
 }(this, function (_, ssm) {
 
     var Requester = {
-      /**
-       * Views breakpoints
-       */
-      breakpoints: {},
-
-      /**
-       * Each state of the view can make a set of transformations to the base view.
-       * As no element of the base view will ever get removed from the DOM, the
-       * transformations will only be additions.
-       * The transformations array will contain a reference View that represents the addition,
-       * allowing to undo each transformation by destroying the view
-       */
-      transformations: [],
 
       /**
        * Initializes the view
-       * @param  {Object} states and object containing the desired transformations for each
-       * breakpoint
-       * {
-       *  breakpointId1 : [{id: , view: }, {id: , view: }],
-       *  breakpointId2 : [{id: , view: }]
-       * }
+       * @param  {Array} states a set of views with the specified screen sizes in which they
+       * should be rendered
+       * [{view: , minWidth:, maxWidth:}]
        */
-      initialize: function (states, breakpoints) {
+      initialize: function (states) {
+        /**
+         * Each state of the view can make a set of transformations to the base view.
+         * As no element of the base view will ever get removed from the DOM, the
+         * transformations will only be additions.
+         * The transformations array will contain a reference View that represents the addition,
+         * allowing to undo each transformation by destroying the view
+         */
         this.transformations = [];
-        this.breakpoints = {
-          b1: {
-            minWidth: 320,
-            maxWidth: 479
-          },
-          b2: {
-            minWidth: 480,
-            maxWidth: 767
-          },
-          b3: {
-            minWidth: 768,
-            maxWidth: 959
-          },
-          b4: {
-            minWidth: 960,
-            maxWidth: 1199
-          },
-          b5: {
-            minWidth: 1200
-          }
-        };
-        if (breakpoints) {
-          this.breakpoints = breakpoints;
-        }
-
+        this.breakpoints = [];
         this.updateStates(states);
       },
 
@@ -79,12 +45,21 @@
       },
 
       /**
-       * Takes the states defined for the view, and updates the view breakpoints
-       * @param  {Array} states The actions defined in the view for each breakpoint
+       * Takes the transformations defined for the view, and updates the view breakpoints
+       * @param  {Array} states The actions defined in the view with the screen sizes
        */
-      updateStates: function (states) {
-        _.each(states, function (state, stateName) {
-          _.extend(this.breakpoints[stateName], {transformations: state});
+      updateStates: function (transformations) {
+        _.each(transformations, function (tfm) {
+          var state = _.findWhere(this.breakpoints, {minWidth: tfm.minWidth, maxWidth: tfm.maxWidth});
+          if(state) {
+            state.transformations.push({view: tfm.view, id: tfm.view});
+          } else {
+            this.breakpoints.push({
+              minWidth: tfm.minWidth,
+              maxWidth: tfm.maxWidth,
+              transformations: [{view: tfm.view, id: tfm.view}]
+            });
+          }
         }, this);
       },
 
@@ -157,6 +132,13 @@
             view: view
           });
         }, this);
+      },
+
+      /**
+       * Destroys each view that's currently rendered
+       */
+      destroy: function() {
+        this.flushTransformations(this.transformations);
       }
     };
 
