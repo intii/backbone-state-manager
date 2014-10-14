@@ -80,8 +80,9 @@
                 breakpoint.callback();
               }
             }
-          }).ready();
+          });
         });
+        ssm.ready();
       },
 
       /**
