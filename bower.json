@@ -1,5 +1,6 @@
 {
   "name": "BackboneStateManager",
+  "version": "1.0.0",
   "dependencies": {
     "SimpleStateManager": "~2.3.0"
   }
